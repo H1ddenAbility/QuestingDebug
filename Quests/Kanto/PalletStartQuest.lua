@@ -1,8 +1,3 @@
--- Copyright © 2016 g0ld <g0ld@tuta.io>
--- This work is free. You can redistribute it and/or modify it under the
--- terms of the Do What The Fuck You Want To Public License, Version 2,
--- as published by Sam Hocevar. See the COPYING file for more details.
-
 local sys    = require "Libs/syslib"
 local Quest  = require "Quests/Quest"
 local Dialog = require "Quests/Dialog"
@@ -17,7 +12,7 @@ local dialogs = {
 	}),
 	oak = Dialog:new({
 		"but you can have one",
-		"which pokemon do you want"
+		"which pokemon do you want"				
 	}),
 	bulbasaur = Dialog:new({
 		"grass type Pokemon Bulbasaur",
@@ -27,18 +22,22 @@ local dialogs = {
 	}),
 	squirtle = Dialog:new({
 		"water type Pokemon Squirtle",
+	}),
+	eevee = Dialog:new({
+		"wonder what's with that Eevee",
+	}),
+	jackson = Dialog:new({
+		"if you managed a good fight in this instance",
 	})
 }
 
 local PalletStartQuest = Quest:new()
 function PalletStartQuest:new()
-	--setting moon fossil, if no none defined
-	if not KANTO_STARTER_ID then KANTO_STARTER_ID = math.random(1,4) end
 	return Quest.new(PalletStartQuest, name, description, _, dialogs)
 end
 
 function PalletStartQuest:isDoable()
-	if not hasItem("Boulder Badge") and self:hasMap() then
+	if not hasItem("Boulder Badge") and self:hasMap() and not hasItem("Rising Badge") then
 		return true
 	end
 	return false
@@ -79,6 +78,10 @@ function PalletStartQuest:PalletTown()
 		return moveToMap("Oaks Lab")
 	elseif not hasItem("Pokeball") then
 		return moveToMap("Player House Pallet")
+	elseif self.dialogs.jackson.state == true then
+		return moveToMap("Route 1")
+	elseif self.dialogs.eevee.state == true and not isNpcVisible("Jackson") then
+		return relog(5,"relogging")
 	else
 		if isNpcVisible("#133") then
 			return talkToNpc("#133")
@@ -127,13 +130,5 @@ function PalletStartQuest:OaksLab()
 	end
 end
 
-function PalletStartQuest:battle()
-	if getPokemonHealthPercent(1) < 50 then
-		if useItemOnPokemon("Potion", 1) then
-			return true
-		end
-	end
-	return attack()
-end
 
 return PalletStartQuest

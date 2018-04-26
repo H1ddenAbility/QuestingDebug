@@ -173,7 +173,7 @@ end
 
 function SoulBadgeQuest:FuchsiaCity()
     sys.debug("SoulBadgeQuest.fuchsiaCity() states:", true)
-	if team.getLowestLvl() >= 60 then
+	if game.minTeamLevel() >= 60 then
         sys.debug("minTeamLevel >= 60, goingt to Route15 Stop House, its need is unknown atm")
 		return moveToMap("Route 15 Stop House")
 
@@ -240,7 +240,7 @@ function SoulBadgeQuest:SafariStop()
 end
 
 function SoulBadgeQuest:Route15StopHouse()
-	if team.getLowestLvl() >= 60 then
+	if game.minTeamLevel() >= 60 then
 		return moveToMap("Route 15")
 	elseif self:needPokecenter() or self.registeredPokecenter ~= "Pokecenter Fuchsia" or self:isTrainingOver() then
 		return moveToMap("Fuchsia City")
@@ -255,7 +255,7 @@ function SoulBadgeQuest:Route15StopHouse()
 end
 
 function SoulBadgeQuest:FuchsiaCityStopHouse()
-	if team.getLowestLvl() >= 60 then
+	if game.minTeamLevel() >= 60 then
 		return moveToMap("Fuchsia City")
 	elseif not hasItem("HM03 - Surf") then
 		if dialogs.questSurfAccept.state then
@@ -269,7 +269,7 @@ function SoulBadgeQuest:FuchsiaCityStopHouse()
 end
 
 function SoulBadgeQuest:Route19()
-	if team.getLowestLvl() >= 60 then
+	if game.minTeamLevel() >= 60 then
 		return moveToMap("Fuchsia City Stop House")
 	elseif hasItem("HM03 - Surf") then
 		if not game.hasPokemonWithMove("Surf") then

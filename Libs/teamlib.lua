@@ -104,17 +104,11 @@ function team.getHighestPkmAlive()
     return team._compare(team.getAlivePkm(), gen.maxLvl)
 end
 
-function team.getLowestLvlPkm()
-    return team._compare(team.getPkm(), gen.minLvl)
-end
 
 function team.getLowestPkmAlive()
     return team._compare(team.getAlivePkm(), gen.minLvl)
 end
 
-function team.getLowestLvl()
-    return getPokemonLevel(team.getLowestLvlPkm())
-end
 
 function team.getPkm()
     local pkm = {}

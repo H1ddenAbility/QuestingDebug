@@ -186,7 +186,7 @@ end
 function pc._retrieveFirst(args)
     --preparing swap target
     --assert(args.swapId, "pc._retrieveFirst needs a swapId parameter")
-    local swapId = args.swapId or team.getLowestLvlPkm()
+    local swapId = args.swapId or game.minTeamLevel()
     args.swapId = nil
 
     -- start search if we didn't do it before | this occurs when switching pcBox as you have to terminate,

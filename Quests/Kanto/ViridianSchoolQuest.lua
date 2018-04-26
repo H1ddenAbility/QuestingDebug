@@ -62,7 +62,7 @@ function ViridianSchoolQuest:Route1StopHouse()
 end
 
 function ViridianSchoolQuest:isTrainingOver()
-	if getTeamSize() >= 2 and team.getLowestLvl() >= self.level then
+	if getTeamSize() >= 2 and game.minTeamLevel() >= self.level then
 		return true
 	end
 	return false

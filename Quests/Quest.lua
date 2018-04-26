@@ -95,7 +95,7 @@ function Quest:pokemart(exitMapName)
 end
 
 function Quest:isTrainingOver()
-	if team.getLowestLvl() >= self.level then
+	if game.minTeamLevel() >= self.level then
 		if self.training then -- end the training
 			self:stopTraining()
 		end
@@ -218,7 +218,9 @@ local moonStoneTargets = {
 function Quest:evolvePokemon()
 	-- some buffer levels, to ensure every teammember is fully evolved when figthing e4
 	-- some leeway for indiviudal quest caps: Kanto e4 is started with lv 95, so evolving could start at 93
-	if team.getLowestLvl() >= 90 then enableAutoEvolve() end
+	if getTeamSize() >=2 and game.minTeamLevel() >= 90 then 
+		enableAutoEvolve() 
+	end
 	-- or team.getHighestLvl() >= 93 --not leveling mixed teams efficiently: lv 38, ...., lv 93
 
 	local hasMoonStone = hasItem("Moon Stone")
@@ -352,7 +354,7 @@ function Quest:battleMessage(message)
 		if self.level < 100
 			and self:isTrainingOver()
 		then
-			self.level = math.max(team:getLowestLvl(), self.level) + 1
+			self.level = math.max(game.minTeamLevel(), self.level) + 1
 			self:startTraining()
 			log("Increasing " .. self.name .. " quest level to " .. self.level .. ". Training time!")
 		end
